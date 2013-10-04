@@ -3,13 +3,15 @@
 IronSchemeUnity is a collection of c# scripts and IronScheme libraries that make it possible to use IronScheme as a scripting language in Unity3d.
 
 # Setup
-IronScheme Unity is meant to be used in the context of a Unity3d project. To "Install" Either clone this repository or copy the files to somewhere in your project's Assets directory.
+IronScheme Unity is meant to be used in the context of a Unity3d project. To "Install" Clone this repository and copy the files and folders to your project's Assets directory. The folder structure is important because of the way unity works and the special meaning folders like Editor and StreamingAssets have.
 
 ```Shell
-$ git clone https://github.com/saolsen/IronSchemeUnity.git /my/unity/project/Assets/IronSchemeUnity
+$ git clone https://github.com/saolsen/IronSchemeUnity.git
+$ cd IronSchemeUnity
+$ cp ./* /my/unity/project/Assets/
 ```
 
-Then open the unity project (or if it's already open wait for it to import the new assets). In unity go to Edit -> Project Settings -> Player and under Other Settings -> Optimization set "Api compatibility level" to ".NET 2.0." One of the things included is a repl window so then you should be able to go to the Window menu, select Repl and have an ironscheme repl that you can evaluate expressions from right in the editor.
+Then open the unity project (or if it's already open wait for it to import the new assets). In unity go to Edit -> Project Settings -> Player and under Other Settings -> Optimization set "Api compatibility level" to ".NET 2.0." One of the things included is a repl window so you should now be able to go to the Window menu, select Repl and have an ironscheme repl that you can evaluate expressions from in the editor.
 
 # What's Included
 * Simple editor repl with the ability to load scheme libraries.
@@ -48,9 +50,20 @@ Then from the repl you should be able to load and call the library.
 ```
 
 # Common Scheme Libraries
-IronSchemeUnity ships with a (very small) library that wraps some common unity functionality. It is far from extensive and it's my hope that if you write some code that you think is useful to anyone you would submit it back to this library so we can gradually build it up. You can load it from the repl or from another library definition with import.
+IronSchemeUnity ships with a (very small) library that wraps some common unity functionality. It is far from extensive and it's my hope that if you write some code that you think is useful to anyone you would submit it back to this library so we can gradually build it up. You can load it from the repl or from another scheme file with import.
+
+```Scheme
+(import (unity))
+```
 
 # Calling Scheme from csharp.
 One limitation of IronScheme currently is you can't implement a class that extends Monobehavior directly. That doesn't mean you can't consume an IronScheme library to the same effect though. References to functions in a scheme library can be captured in c# and then executed. A very simple example of a monobehavior that consumes a scheme file are testlib.sls and TestLibrary.cs. This example shows capturing an "update" function from scheme and calling it every Update() of the monobehavior.
 
 I'm currently working on a much nicer system for creating gameobject behaviors in scheme which will be modeled after the techniques [here](https://docs.google.com/document/d/13kocjneV_tprPBXm6q63QQnCqmofRMBCJ8qjzHmxvgk/pub) but they are not ready yet.
+
+# Future Work (and call for submissions)
+* Better Tooling (Nicer editor repl, In game repl)
+* More functions for the standard library.
+* Ways to declare game behavior and attach it to game objects. (first attempts coming soon)
+
+Huge thanks to [leppie](https://twitter.com/leppie) for helping get this working.
